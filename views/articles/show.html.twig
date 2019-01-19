@@ -1,5 +1,5 @@
 {% extends 'index.html.twig' %}
-{% block title %}Read: {{ title }} | {{ parent() }}{% endblock %}
+{% block title %}Read: {{ article.title }} | {{ parent() }}{% endblock %}
 
 {% block content %}
 
@@ -9,15 +9,17 @@
             <div class="show-article-container p-3 mt-4">
                 <div class="row">
                     <div class="col-sm-12">
-                        <img class="show-article-img" src="{{ asset('img/asteroid.jpeg') }}">
+                        <img class="show-article-img" src="{{ asset(article.fullImagePath) }}">
                         <div class="show-article-title-container d-inline-block pl-3 align-middle">
-                            <span class="show-article-title ">{{ title }}</span>
+                            <span class="show-article-title ">{{ article.title }}</span>
                             <br>
-                            <span class="align-left article-details"><img class="article-author-img rounded-circle" src="{{ asset('img/alien-profile.png') }}"> Mike Ferengi </span>
+                            <span class="align-left article-details"><img class="article-author-img rounded-circle"
+                                                                          src="{{ asset('img/alien-profile.png') }}">
+                                {{ article.author }} </span>
                             <span class="pl-2 article-details"> 4 hours ago</span>
                             <span class="pl-2 article-details">
-                                <span class="article__like-count">5</span>
-                                <a href="{{ path('article_liked', {slug: slug}) }}" class="fa fa-heart-o like-article
+                                <span class="article__like-count">{{ article.likesCount }}</span>
+                                <a href="{{ path('article_liked', {slug: article.slug}) }}" class="fa fa-heart-o like-article
                                 article__like-icon"></a> </span>
                         </div>
                     </div>
@@ -25,7 +27,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="article-text">
-                            {{ articleContent | raw }}
+                            {{ article.content | markdown }}
                         </div>
                     </div>
                 </div>

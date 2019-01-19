@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
+use App\Service\ArticleService;
 use App\Service\Markdown as MarkdownHelper;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,13 +28,13 @@ class ArticlesController extends AbstractController
    */
   public function index()
   {
-    return new Response('OMG! My first article already! WOOO!');
+    return $this->redirectToRoute('home');
   }
 
   /**
    * @Route("/articles/{slug}", name="article_show")
    */
-  public function show($slug, MarkdownHelper $markdownHelper)
+  public function show(Article $article)
   {
     $comments = [
       'I ate a normal rock once. It did NOT taste like bacon! 1',
@@ -39,21 +42,9 @@ class ArticlesController extends AbstractController
       'I ate a normal rock once. It did NOT taste like bacon! 3',
     ];
 
-    $articleContent = <<<HEREDOC
-**Lorem Ipsum** is simply [dummy text](https://example.com) of the printing and typesetting industry.
- Lorem Ipsum has been the industry's standard dummy text ever since the
-  1500s, when an unknown printer took a galley of type and scrambled it to make
-   a type specimen book. It has survived not only five centuries,
- but also the leap into electronic typesetting, remaining essentially unchanged.
-HEREDOC;
-
-    $articleContent = $markdownHelper->parse($articleContent);
-
     return $this->render('articles/show.html.twig',
       [
-        'slug' => $slug,
-        'title' => ucwords(str_replace('-', ' ', $slug)),
-        'articleContent' => $articleContent,
+        'article' => $article,
         'comments' => $comments
       ]
     );
@@ -62,13 +53,10 @@ HEREDOC;
   /**
    * @Route("/articles/{slug}/like", name="article_liked", methods={"POST"})
    */
-  public function articleLiked($slug, LoggerInterface $logger)
+  public function articleLiked(Article $article, ArticleService $service)
   {
-    // TODO - actually heart/unheart the article!
+    $service->addLike($article);
 
-    $logger->info('Article liked');
-
-
-    return new JsonResponse(['likes' => rand(5, 100)]);
+    return new JsonResponse(['likes' => $article->getLikesCount()]);
   }
 }

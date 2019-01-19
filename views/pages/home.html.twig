@@ -18,41 +18,21 @@
 
                 <!-- Supporting Articles -->
 
-                <div class="article-container my-1">
-                    <a href="{{ path('article_show', {slug: 'why-do-asteroids-taste-like-bacon'}) }}">
-                        <img class="article-img" src="{{ asset('img/asteroid.jpeg') }}">
-                        <div class="article-title d-inline-block pl-3 align-middle">
-                            <span>Why do Asteroids Taste Like Bacon?</span>
-                            <br>
-                            <span class="align-left article-details"><img class="article-author-img rounded-circle" src="{{ asset('img/alien-profile.png') }}"> Mike Ferengi </span>
-                            <span class="pl-5 article-details float-right"> 3 hours ago</span>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="article-container my-1">
-                    <a href="{{ path('article_show', {slug: 'tan-relaxing-and-fabulous'}) }}">
-                        <img class="article-img"  src="{{ asset('img/mercury.jpeg') }}">
-                        <div class="article-title d-inline-block pl-3 align-middle">
-                            <span>Life on Planet Mercury: <br> Tan, Relaxing and Fabulous</span>
-                            <br>
-                            <span class="align-left article-details"><img class="article-author-img rounded-circle" src="{{ asset('img/astronaut-profile.png') }}"> Amy Oort </span>
-                            <span class="pl-5 article-details float-right"> 6 days ago</span>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="article-container my-1">
-                    <a href="{{ path('article_show', {slug: 'fountain-of-youth-or-fallacy'}) }}">
-                        <img class="article-img" src="{{ asset('img/lightspeed.png') }}">
-                        <div class="article-title d-inline-block pl-3 align-middle">
-                            <span>Light Speed Travel: <br> Fountain of Youth or Fallacy</span>
-                            <br>
-                            <span class="align-left article-details"><img class="article-author-img rounded-circle" src="{{ asset('img/astronaut-profile.png') }}"> Amy Oort </span>
-                            <span class="pl-5 article-details float-right"> 2 weeks ago</span>
-                        </div>
-                    </a>
-                </div>
+                {% for article in articles %}
+                    <div class="article-container my-1">
+                        <a href="{{ path('article_show', {slug: article.slug}) }}">
+                            <img class="article-img" src="{{ asset(article.fullImagePath) }}">
+                            <div class="article-title d-inline-block pl-3 align-middle">
+                                <span>{{ article.title }}</span>
+                                <br>
+                                <span class="align-left article-details"><img class="article-author-img
+                                rounded-circle" src="{{ asset('img/alien-profile.png') }}"> {{ article.author }} </span>
+                                <span class="pl-5 article-details float-right">{{ article.publishedAt | date('Y-m-d
+                                H:i:s') }}</span>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
 
             </div>
 
