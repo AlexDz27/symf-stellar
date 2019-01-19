@@ -1,0 +1,8 @@
+twig:
+    default_path: '%kernel.project_dir%/views'
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+
+    globals:
+        locale: '%locale%'
+        app_name: '%env(APP_NAME)%'

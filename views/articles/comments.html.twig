@@ -1,0 +1,8 @@
+<b>Comments section (total comments: {{ comments | length }})</b>
+{% if comments is not empty %}
+  <ul>
+    {% for comment in comments %}
+      <li class="comments__item">{{ comment }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
