@@ -27,6 +27,14 @@
              <li class="nav-item">
                <a style="color: #fff;" class="nav-link" href="#">Weather</a>
              </li>
+            <li class="nav-item">
+               <a style="color: #fff;" class="nav-link" href="{{ path('login') }}">Login</a>
+             </li>
+            {% if is_granted('ROLE_USER') %}
+              <li class="nav-item">
+                 <a style="color: #fff;" class="nav-link" href="{{ path('logout') }}">Logout</a>
+               </li>
+            {% endif %}
            </ul>
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

@@ -1,0 +1,31 @@
+{% extends 'index.html.twig' %}
+{% block title %}Login | {{ parent() }}{% endblock %}
+
+{% block content %}
+
+  <form method="post" action="{{ path('login') }}">
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" value="{{ lastUsername }}">
+    </div>
+
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password">
+    </div>
+
+    <div>
+      <label for="remember">Remember me:</label>
+      <input type="checkbox" id="remember" name="_remember_me">
+    </div>
+
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+    {% if error %}
+      <div class="alert alert-danger">{{ error.messageKey | trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <button type="submit">Login</button>
+  </form>
+  
+{% endblock %}

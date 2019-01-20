@@ -35,3 +35,5 @@ services:
     App\Service\MessageGenerator:
         arguments:
             $firstMessage: '%firstMessage%'
+
+    Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface:
